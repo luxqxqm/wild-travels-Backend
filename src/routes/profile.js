@@ -1,13 +1,14 @@
-import { celebrate } from 'celebrate';
+
 import { Router } from 'express';
-import { getCurrentUser } from '../controllers/profileController';
-import { getCurrentUserSchema } from '../validations/userValidation';
-
-
-
+import { getCurrentUser , updateAvatar } from '../controllers/profileController.js';
+import { authenticate } from '../middleware/authenticate.js';
 const profileRoutes = Router();
 
-profileRoutes.get('/profile',celebrate(getCurrentUserSchema),getCurrentUser);
+profileRoutes.get('/current', authenticate, getCurrentUser);
+profileRoutes.patch('/avatar', authenticate, updateAvatar);
+
+
 
 export default profileRoutes;
+
 
