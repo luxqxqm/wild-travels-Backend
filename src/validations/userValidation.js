@@ -6,7 +6,9 @@ const objectIdValidator = (value, helpers) => {
 };
 
 export const getCurrentUserSchema = {
-[Segments.PARAMS]: Joi.object({
-    userId: Joi.string().custom(objectIdValidator).required(),}),
+  [Segments.PARAMS]: Joi.object({
+    userId: Joi.string()
+      .custom(objectIdValidator)
+      .required(),
+  }),
 };
-
