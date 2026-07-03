@@ -10,6 +10,7 @@ import { errors } from 'celebrate';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/usersRoutes.js';
 import profileRoutes from './routes/profile.js';
+import storiesRouter from './routes/stories.js';
 import helmet from 'helmet';
 
 const app = express();
@@ -24,7 +25,8 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/profile',profileRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/stories', storiesRouter);
 
 app.use(notFoundHandler);
 
