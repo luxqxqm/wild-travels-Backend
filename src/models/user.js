@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose';
-import { emailRegex } from '../constants/emailRegex.js';
 
 const userSchema = new Schema(
   {
@@ -7,22 +6,22 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
-    email: {
+    avatarUrl: {
       type: String,
-      match: emailRegex,
-      unique: true,
-      required: true,
-      trim: true,
-      lowercase: true,
+      default: 'https://api.dicebear.com/10.x/glyphs/svg?seed=1ufyhxau',
+    },
+    articlesAmount: {
+      type: Number,
+      default: 0,
     },
     password: {
       type: String,
       required: true,
     },
-    avatar: {
-      type: String,
-      required: false,
-      default: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
+    savedArticles: {
+      type: [Schema.Types.ObjectId],
+      ref: 'story',
+      default: [],
     },
   },
   { timestamps: true, versionKey: false },
