@@ -5,6 +5,14 @@ const userSchema = new Schema(
     name: {
       type: String,
       trim: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
     },
     avatarUrl: {
       type: String,
@@ -27,7 +35,7 @@ const userSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   return obj;
