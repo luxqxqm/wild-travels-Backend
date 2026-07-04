@@ -75,7 +75,7 @@ export const removeSavedArticle = async (req, res) => {
       },
     },
     {
-      new: true,
+      returnDocument: 'after',
     },
   );
 
