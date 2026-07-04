@@ -1,7 +1,7 @@
-import Joi from 'joi';
+import { Joi, Segments } from 'celebrate';
 
 export const getStoriesSchema = {
-  query: Joi.object({
+  [Segments.QUERY]: Joi.object({
     page: Joi.number()
       .integer()
       .min(1)
@@ -21,5 +21,14 @@ export const getStoriesSchema = {
     type: Joi.string()
       .valid('popular')
       .optional(),
+  }),
+};
+
+export const getStoryByIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    storyId: Joi.string()
+      .hex()
+      .length(24)
+      .required(),
   }),
 };

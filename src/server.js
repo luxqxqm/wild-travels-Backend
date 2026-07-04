@@ -11,9 +11,9 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 import authRoutes from './routes/authRoutes.js';
+import storiesRoutes from './routes/stories.js';
 import userRoutes from './routes/usersRoutes.js';
 import profileRoutes from './routes/profile.js';
-import storiesRoutes from './routes/stories.js';
 import categoryRouter from './routes/categories.js';
 
 const app = express();
@@ -26,10 +26,10 @@ app.use(helmet());
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/stories', storiesRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/categories', categoryRouter);
-app.use('/api/stories', storiesRoutes);
 
 app.use(errors());
 app.use(notFoundHandler);
