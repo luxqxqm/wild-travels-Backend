@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { emailRegex } from '../constants/emailRegex.js';
 
 const userSchema = new Schema(
   {
@@ -9,8 +10,9 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
+      match: emailRegex,
       unique: true,
+      required: true,
       trim: true,
       lowercase: true,
     },
@@ -28,7 +30,7 @@ const userSchema = new Schema(
     },
     savedArticles: {
       type: [Schema.Types.ObjectId],
-      ref: 'story',
+      ref: 'Story',
       default: [],
     },
   },
@@ -41,4 +43,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const User = model('user', userSchema);
+export const User = model('User', userSchema);
