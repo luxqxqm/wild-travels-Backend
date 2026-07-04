@@ -10,7 +10,9 @@ import { errors } from 'celebrate';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/usersRoutes.js';
 import profileRoutes from './routes/profile.js';
+import categoryRoutes from './routes/categories.js';
 import helmet from 'helmet';
+import storiesRoutes from './routes/stories.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -25,6 +27,9 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/profile',profileRoutes);
+
+app.use('/api/stories', storiesRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.use(notFoundHandler);
 
