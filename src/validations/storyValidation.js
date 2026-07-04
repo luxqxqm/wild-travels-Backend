@@ -1,4 +1,4 @@
-import { Joi } from 'celebrate';
+import Joi from 'joi';
 
 export const getStoriesSchema = {
   query: Joi.object({

@@ -1,10 +1,17 @@
-import { celebrate } from 'celebrate';
 import { Router } from 'express';
-import { getCurrentUser } from '../controllers/profileController.js';
-import { getCurrentUserSchema } from '../validations/userValidation.js';
 
-const profileRoutes = Router();
+import {
+  getCurrentUser,
+  updateAvatar,
+} from '../controllers/profileController.js';
 
-profileRoutes.get('/profile', celebrate(getCurrentUserSchema), getCurrentUser);
+import { authenticate } from '../middleware/authenticate.js';
+import { upload } from '../middleware/multer.js';
 
-export default profileRoutes;
+const router = Router();
+
+router.get('/me', authenticate, getCurrentUser);
+
+router.patch('/avatar', authenticate, upload.single('avatar'), updateAvatar);
+
+export default router;

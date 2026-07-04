@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     savedArticles: {
       type: [Schema.Types.ObjectId],
-      ref: 'story',
+      ref: 'Story',
       default: [],
     },
   },
@@ -33,4 +33,4 @@ userSchema.methods.toJSON = function() {
   return obj;
 };
 
-export const User = model('user', userSchema);
+export const User = model('User', userSchema);
