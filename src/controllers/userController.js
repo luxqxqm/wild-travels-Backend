@@ -67,8 +67,11 @@ export const removeSavedArticle = async (req, res) => {
     throw createHttpError(400, 'Invalid article id');
   }
 
-  const user = await User.findByIdAndUpdate(
-    req.user._id,
+  const user = await User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+      savedArticles: articleId,
+    },
     {
       $pull: {
         savedArticles: articleId,
@@ -80,7 +83,7 @@ export const removeSavedArticle = async (req, res) => {
   );
 
   if (!user) {
-    throw createHttpError(404, 'User not found');
+    throw createHttpError(404, 'Article is not in saved articles');
   }
 
   res.status(200).json({
