@@ -89,6 +89,50 @@ export const getUserById = async (req, res) => {
   });
 };
 
+export const addSavedArticle = async (req, res) => {
+  const { articleId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    throw createHttpError(400, 'Invalid article id');
+  }
+
+  const story = await Story.findById(articleId);
+
+  if (!story) {
+    throw createHttpError(404, 'Article not found');
+  }
+
+  const user = await User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+      savedArticles: { $ne: articleId },
+    },
+    {
+      $addToSet: {
+        savedArticles: articleId,
+      },
+    },
+    {
+      returnDocument: 'after',
+    },
+  );
+
+  if (!user) {
+    throw createHttpError(409, 'Article already saved');
+  }
+
+  await Story.findByIdAndUpdate(articleId, {
+    $inc: {
+      savedCount: 1,
+    },
+  });
+
+  res.status(201).json({
+    message: 'Article added to saved articles',
+    savedArticles: user.savedArticles,
+  });
+};
+
 export const removeSavedArticle = async (req, res) => {
   const { articleId } = req.params;
 
@@ -114,6 +158,12 @@ export const removeSavedArticle = async (req, res) => {
   if (!user) {
     throw createHttpError(404, 'Article is not in saved articles');
   }
+
+  await Story.findByIdAndUpdate(articleId, {
+    $inc: {
+      savedCount: -1,
+    },
+  });
 
   res.status(200).json({
     message: 'Article removed from saved articles',
