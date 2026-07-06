@@ -43,3 +43,11 @@ export const removeSavedArticleSchema = {
       .required(),
   }),
 };
+
+export const addSavedArticleSchema = {
+  [Segments.PARAMS]: Joi.object({
+    articleId: Joi.string()
+      .custom(objectIdValidator)
+      .required(),
+  }),
+};
