@@ -121,12 +121,6 @@ export const addSavedArticle = async (req, res) => {
     throw createHttpError(409, 'Article already saved');
   }
 
-  await Story.findByIdAndUpdate(articleId, {
-    $inc: {
-      savedCount: 1,
-    },
-  });
-
   res.status(201).json({
     message: 'Article added to saved articles',
     savedArticles: user.savedArticles,
@@ -158,12 +152,6 @@ export const removeSavedArticle = async (req, res) => {
   if (!user) {
     throw createHttpError(404, 'Article is not in saved articles');
   }
-
-  await Story.findByIdAndUpdate(articleId, {
-    $inc: {
-      savedCount: -1,
-    },
-  });
 
   res.status(200).json({
     message: 'Article removed from saved articles',
